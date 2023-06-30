@@ -7,9 +7,15 @@
     "nightwatch.conf.*",
     "playwright.config.*"
   ],
+  "paths": {
+    "~/*": ["src/*"],
+    "@/*": ["./src/*"]
+  },
   "compilerOptions": {
+    "baseUrl": ".",
     "composite": true,
     "module": "ESNext",
-    "types": ["node"]
+    "types": ["node"],
+    "moduleResolution":"node",
   }
 }

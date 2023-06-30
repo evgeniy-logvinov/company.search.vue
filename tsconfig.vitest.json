@@ -2,8 +2,14 @@
   "extends": "./tsconfig.app.json",
   "exclude": [],
   "compilerOptions": {
+    "baseUrl": ".",
     "composite": true,
     "lib": [],
-    "types": ["node", "jsdom"]
+    "types": ["node", "jsdom"],
+    "moduleResolution":"node",
+  },
+  "paths": {
+    "~/*": ["src/*"],
+    "@/*": ["./src/*"]
   }
 }

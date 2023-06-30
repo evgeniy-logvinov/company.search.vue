@@ -1,23 +1,38 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { computed, watchEffect } from 'vue'
+import { useCompanyStore } from './stores/companies'
+
+const { companies } = useCompanyStore()
+
+watchEffect(async () => {
+  // const loading = getLoading()
+  try {
+    const { fetchCompanies } = useCompanyStore()
+    await fetchCompanies()
+    console.log('c', companies)
+  } catch (err) {
+    console.log('err', err)
+    // showError(err as Error)
+  } finally {
+    // loading.close()
+  }
+})
+
+const companiesAll = computed(() => {
+  return companies.all
+})
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <el-table :data="companiesAll" style="width: 100%">
+    <el-table-column prop="name" label="Name" />
+    <el-table-column prop="inn" label="Inn" />
+    <el-table-column prop="email" label="Email" />
+    <el-table-column class-name="capitalize" prop="isSend" label="Send" />
+    <el-table-column prop="sendDescription" label="Description" />
+  </el-table>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <!-- <RouterView /> -->
 </template>
 
 <style scoped>
